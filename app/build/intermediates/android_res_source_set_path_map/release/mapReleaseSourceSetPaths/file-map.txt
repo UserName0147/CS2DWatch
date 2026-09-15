@@ -1,0 +1,9 @@
+com.example.cs2dwatch.app-pngs-0 D:\CS2DWatch\app\build\generated\res\pngs\release
+com.example.cs2dwatch.app-resValues-1 D:\CS2DWatch\app\build\generated\res\resValues\release
+com.example.cs2dwatch.app-updated_navigation_xml-2 D:\CS2DWatch\app\build\generated\updated_navigation_xml\release
+com.example.cs2dwatch.app-packageReleaseResources-3 D:\CS2DWatch\app\build\intermediates\incremental\release\packageReleaseResources\merged.dir
+com.example.cs2dwatch.app-packageReleaseResources-4 D:\CS2DWatch\app\build\intermediates\incremental\release\packageReleaseResources\stripped.dir
+com.example.cs2dwatch.app-release-5 D:\CS2DWatch\app\build\intermediates\merged_res\release\mergeReleaseResources
+com.example.cs2dwatch.app-main-6 D:\CS2DWatch\app\src\main\res
+com.example.cs2dwatch.app-release-7 D:\CS2DWatch\app\src\release\res
+gradleHome-0 C:\Users\user\.gradle
