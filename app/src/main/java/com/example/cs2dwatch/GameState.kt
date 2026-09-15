@@ -12,7 +12,6 @@ class GameState(private val screenWidth: Float, private val screenHeight: Float)
     val player = Player(screenWidth / 2f, screenHeight / 2f)
     val enemies = mutableListOf<Enemy>()
     val bullets = mutableListOf<Bullet>()
-    val particles = mutableListOf<Particle>()
 
     var onImpact: (() -> Unit)? = null // Колбэк для вибрации
 
@@ -41,7 +40,6 @@ class GameState(private val screenWidth: Float, private val screenHeight: Float)
         updatePlayer(dt, moveDir, wantShoot)
         updateEnemies(dt)
         updateBullets(dt)
-        updateParticles(dt)
         handleSpawning(dt)
         handleCollisions()
 
@@ -103,7 +101,6 @@ class GameState(private val screenWidth: Float, private val screenHeight: Float)
                     player.health -= 30
                     e.health = 0 // Умирает при взрыве
                     onImpact?.invoke()
-                    spawnExplosion(e.x, e.y, Color.rgb(255, 69, 0), 20)
                 }
             } else if (e.type == EnemyType.BOSS) {
                 // БОСС медленно движется и стреляет веером
@@ -179,32 +176,6 @@ class GameState(private val screenWidth: Float, private val screenHeight: Float)
         bullets.removeAll { !it.alive }
     }
 
-    private fun updateParticles(dt: Float) {
-        for (p in particles) {
-            p.x += p.vx * dt
-            p.y += p.vy * dt
-            p.life -= dt
-            if (p.life <= 0f) p.alive = false
-        }
-        particles.removeAll { !it.alive }
-    }
-
-    private fun spawnExplosion(x: Float, y: Float, color: Int, count: Int) {
-        for (i in 0 until count) {
-            val angle = Random.nextFloat() * 2f * Math.PI.toFloat()
-            val speed = Random.nextFloat() * 150f + 50f
-            particles.add(
-                Particle(
-                    x, y,
-                    cos(angle) * speed,
-                    sin(angle) * speed,
-                    color,
-                    Random.nextFloat() * 0.5f + 0.2f
-                )
-            )
-        }
-    }
-
     private fun handleSpawning(dt: Float) {
         if (waveEnemiesRemaining <= 0 && enemies.isEmpty()) {
             wave += 1
@@ -274,11 +245,9 @@ class GameState(private val screenWidth: Float, private val screenHeight: Float)
                     if (hits(b.x, b.y, b.radius, e.x, e.y, e.radius)) {
                         e.health -= b.damage
                         b.alive = false
-                        spawnExplosion(b.x, b.y, Color.YELLOW, 5)
                         if (!e.isAlive) {
                             score += 10
                             player.health = (player.health + player.lifeSteal).coerceAtMost(player.maxHealth)
-                            spawnExplosion(e.x, e.y, Color.RED, 15)
                         }
                         break
                     }
@@ -288,7 +257,6 @@ class GameState(private val screenWidth: Float, private val screenHeight: Float)
                     player.health -= b.damage
                     b.alive = false
                     onImpact?.invoke() // Вибрация при попадании в игрока
-                    spawnExplosion(b.x, b.y, Color.rgb(255, 100, 0), 8)
                 }
             }
         }

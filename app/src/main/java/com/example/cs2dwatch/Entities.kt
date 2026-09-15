@@ -69,19 +69,6 @@ class Bullet(
     var alive: Boolean = true
 }
 
-/** Частица для эффектов */
-class Particle(
-    var x: Float,
-    var y: Float,
-    val vx: Float,
-    val vy: Float,
-    val color: Int,
-    var life: Float // время жизни в секундах
-) {
-    val maxLife = life
-    var alive = true
-}
-
 // Случайное число с плавающей точкой в диапазоне (используется для разброса задержки стрельбы ботов)
 private fun ClosedFloatingPointRange<Float>.random(): Float =
     start + (endInclusive - start) * kotlin.random.Random.nextFloat()

@@ -41,7 +41,6 @@ class GameView(context: Context) : SurfaceView(context), SurfaceHolder.Callback,
     private val paintJoystickKnob = Paint().apply { color = Color.argb(160, 255, 255, 255); isAntiAlias = true }
     private val paintShootBtn = Paint().apply { color = Color.argb(90, 255, 90, 90); isAntiAlias = true }
     private val paintHud = Paint().apply { color = Color.WHITE; textSize = 26f; isAntiAlias = true }
-    private val paintParticle = Paint().apply { isAntiAlias = true }
     private val paintHealthBg = Paint().apply { color = Color.rgb(60, 20, 20) }
     private val paintHealthFg = Paint().apply { color = Color.rgb(60, 200, 90) }
     private val paintGameOver = Paint().apply {
@@ -131,12 +130,6 @@ class GameView(context: Context) : SurfaceView(context), SurfaceHolder.Callback,
 
     private fun render(canvas: Canvas) {
         canvas.drawRect(0f, 0f, screenW, screenH, paintBg)
-
-        for (p in state.particles) {
-            paintParticle.color = p.color
-            paintParticle.alpha = (255 * (p.life / p.maxLife)).toInt().coerceIn(0, 255)
-            canvas.drawCircle(p.x, p.y, 3f, paintParticle)
-        }
 
         for (b in state.bullets) {
             canvas.drawCircle(b.x, b.y, b.radius, if (b.fromPlayer) paintBulletPlayer else paintBulletEnemy)
